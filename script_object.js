@@ -305,9 +305,14 @@ console.clear();
         return o;
     }
 
+// 🔄 Возвращает новый объект, содержащий свойства, присутсвующие хотя бы в одном из объектов o🐴 и p🐮
+
+    function union(o, p) {return extend(extend({}, p), o);};         //👈 отбрасываются значения свойств объекта p {🐷}
+    function union(o, p) {return extend(extend({}, o), p);};         //👈 отбрасываются значения свойств объекта o {🐷}
+
 // 🔄 Возвращает новый объект, содержащий свойства, присутсвующие сразу в обоих объектах o🐴 и p🐮
-    function intersection(o, p) {return extend(extend({}, p), o);};         //👈 отбрасываются значения свойств объекта p {🐷}
-    function intersection2(o, p) {return extend(extend({}, o), p);};        //👈 отбрасываются значения свойств объекта o {🐷}
+    
+    function intersection(o, p) {return restrict(extend({}, o), p);};         //👈 отбрасываются значения свойств объекта p {🐷}
 
 // 🔄 Возвращает массив имен 👉собственных👈 перечислимых👆👆 свойств 👆объекта👆 o🐴 (аналогично методу Object.getOwnPropertyNames(🐷))🔥🔥🔥🔥🔥🔥
     function keys(o) {
