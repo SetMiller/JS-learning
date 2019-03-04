@@ -258,6 +258,7 @@ console.clear();
     r2.a = 2;
     r2.x = 10;
     r2.f2 = (function f() {});
+    
     for (prop in r2) {
         if (!r2.hasOwnProperty(prop)) continue;                //👈 выполняем фильтрацию наследуемых свойств и методов💎
         if (typeof r2[prop] === 'function') continue;          //👈 выполняем фильтрацию🔥🔥🔥 👉собственных и наследуемых👈 методов💎
