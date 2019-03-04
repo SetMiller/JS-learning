@@ -35,8 +35,7 @@
 //     ,0)                                                             //👈 Начальное значение счетчика
 //   ,0)
 
-
-
+//  ------------------------------------------------------------------------------
 
 // // 2️⃣
 // Given a string and an array of index numbers, return the characters of the string 
@@ -63,17 +62,10 @@ let mid = [];
 
 // вариант ECMAScript 5
 
-// function scramble2(str, arr) {
-//     str.split('').forEach((v, i) => {mid[arr[i]] = v;});
-//     return mid.join('');
-// };
-// console.log(scramble2(str, arr));
-
-function scramble(str, arr) {
-    for (let i of arr) {
-    console.log(i);
-    mid[arr[i]] = str[i];
-    };
+function scramble2(str, arr) {
+    str.split('').forEach((v, i) => {mid[arr[i]] = v;});
     return mid.join('');
-  };
-  console.log(scramble(str, arr));
+};
+console.log(scramble2(str, arr));
+
+//  ------------------------------------------------------------------------------
