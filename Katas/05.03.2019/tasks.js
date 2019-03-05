@@ -125,3 +125,27 @@ function ranking4(people) {
   return arr
 }
 
+function ranking5(arr) {
+    for (var i=0; i<arr.length-1; ++i)
+      for (var j=i+1; j<arr.length; ++j)
+        if (arr[i].points<arr[j].points || (arr[i].points==arr[j].points && arr[i].name>arr[j].name))
+        {
+          var c=arr[i];
+          arr[i]=arr[j];
+          arr[j]=c;
+        }
+    var p=1; 
+    for (var i=0; i<arr.length; ++i)
+    {
+      if (i==0)
+        arr[i].position=1;
+      else
+      {
+        if (arr[i].points==arr[i-1].points)
+          arr[i].position=arr[i-1].position;
+        else
+          arr[i].position=i+1;
+      }
+    }
+    return arr;
+  }
