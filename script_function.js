@@ -533,6 +533,25 @@ console.clear();
   let cc2 = myName2("Rafael","Solomko");
   cc2.greeting;
 
+  // Пример 5.
+  function celebrityName(firstName) {
+    var nameIntro = "This celebrity is ";
+    // this inner function has access to the outer function's variables, including the parameter
+    function lastName(theLastName) {
+        return nameIntro + firstName + " " + theLastName;
+    }
+    return lastName;
+  }
+  // var mjName = celebrityName ("Michael"); // At this juncture, the celebrityName outer function has returned.
+  // The closure (lastName) is called here after the outer function has returned above
+  // Yet, the closure still has access to the outer function's variables and parameter
+  // mjName ("Jackson"); // This celebrity is Michael Jackson
+  // console.log(namesOf);
+  let rsName = celebrityName("Rafael");
+  console.log(`${rsName("Solomko")}`);
+  let rsName2 = celebrityName("Rafael")("Solomko");
+  console.log(`${rsName2}`);
+
   // ВАЖНО 🔥🔥🔥 SCOPE -> область видимости функции и CLOSURE -> замыкание
   let abc = 123;
   function foo1() {
@@ -596,7 +615,7 @@ let dd = counterUpdate(2);                            //👈 Вызов d.count;
 dd.count;                                             //👈 -> 2
 dd.count;                                             //👈 -> 3
 // dd.count = 2;                                      //👈 -> Error: значение счетчика нельзя уменьшить
-console.clear();
+//console.clear();
 
 // Демонстрация обобщения приема совместного использования скрытой информации в замыканиях
 //📣 Пример определяет функцию addPrivateProperty(), которая определяет скрытую переменную и две вложенные функции
@@ -620,22 +639,11 @@ console.clear();
   addPrivateProperty(obj1, "name", function(x) {return typeof x == 'string';});
   obj1.setname("Frank");
   obj1.getname();
-
+console.clear();
 
 // Пример правильного и ошибочного использования замыкания
-
-// 1. вариант (правильно😄)
-// эта функция возвращает функцию, которая всегда возврщащает "v"
-function constFunc(v) { return function() {return v}};
-// создать массив функций-констант
-let funcs = [];
-for(let i = 0; i < 10; i++) {                         //получаем массив funcs = [ƒ, ƒ, ƒ, ƒ, ƒ, ƒ, ƒ, ƒ, ƒ, ƒ]
-  funcs[i] = constFunc(i);                            //аналогично funcs[i] = i и вызов funcs[5]
-};
-// функция в элементе массива с индексом 5 возвращает 5
-funcs[5]();                                           //👈 -> 5
-
-// 2. вариант (неправильно😔) НЕ ВИЖУ РАЗНИЦЫ В РЕЗУЛЬТАТАХ🐙🐙
+// 1. вариант (неправильно😔) НЕ ВИЖУ РАЗНИЦЫ В РЕЗУЛЬТАТАХ🐙🐙 примера 1.
+// пример 1.
 // Возвращает массив функция, возвращающих значения 0-9
 function constFuncs() {
   let funcs2 = [];
@@ -646,6 +654,62 @@ function constFuncs() {
 };
 let funcs2 = constFuncs();
 funcs2[5]();                                          //👈 -> 5
+
+// пример 2.
+function celebrityIDCreator (theCelebrities) {
+  var i;
+  var uniqueID = 100;
+  for (i = 0; i < theCelebrities.length; i++) {
+    theCelebrities[i]["id"] = function ()  {
+      return uniqueID + i;
+    }
+  }
+  
+  return theCelebrities;
+}
+var actionCelebs = [{name:"Stallone", id:0}, {name:"Cruise", id:0}, {name:"Willis", id:0}];
+var createIdForActionCelebs = celebrityIDCreator (actionCelebs);
+var stalloneID = createIdForActionCelebs [0];
+console.log(stalloneID.id()); // 103
+
+// 2. вариант (правильно😄)
+// пример 1.
+// эта функция возвращает функцию, которая всегда возвращает "v"
+// function constFunc(v) { return function() {return v}};
+// // создать массив функций-констант
+// let funcs = [];
+// for(let i = 0; i < 10; i++) {                         //получаем массив funcs = [ƒ, ƒ, ƒ, ƒ, ƒ, ƒ, ƒ, ƒ, ƒ, ƒ]
+//   funcs[i] = constFunc(i);                            //аналогично funcs[i] = i и вызов funcs[5]
+// };
+// // функция в элементе массива с индексом 5 возвращает 5
+// funcs[5]();                                           //👈 -> 5
+
+// пример 2.
+function celebrityIDCreator2 (theCelebrities) {
+  var i;
+  var uniqueID = 100;
+  for (i = 0; i < theCelebrities.length; i++) {
+      // the j parametric variable is the i passed in on invocation of this IIFE
+      theCelebrities[i]["id"] = function (j)  {         
+          return function () {
+              // each iteration of the for loop passes the current value of i into this IIFE and 
+              // it saves the correct value to the array
+              return uniqueID + j;     
+          // BY adding () at the end of this function, we are executing it immediately 
+          // and returning just the value of uniqueID + j, instead of returning a function.                 
+          } () 
+      // immediately invoke the function passing the i variable as a parameter
+      } (i); 
+  }
+  return theCelebrities;
+}
+var actionCelebs = [{name:"Sigal", id:0}, {name:"Shvarts", id:0}, {name:"Carry", id:0}];
+var createIdForActionCelebs = celebrityIDCreator2 (actionCelebs);
+var sigalID = createIdForActionCelebs [0];
+console.log(sigalID.id); // 100
+var carryID = createIdForActionCelebs [1];
+console.log(carryID.id); // 101
+
 
 // ВАЖНО 🔥🔥🔥 -> "this"
 // Чтобы вложенные функции получили доступ к значению "this" внешней функции, следует сохранить значение "this"
