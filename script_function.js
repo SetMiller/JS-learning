@@ -490,8 +490,8 @@ console.clear();
   let scopeClosure = "global scope";
   function checkScope() {
     let scopeClosure = "local scope";
-    function ff(){return console.log(`scopeClosure = ${scopeClosure}`)}
-    return ff;
+    function f(){return console.log(`scopeClosure = ${scopeClosure}`)}
+    return f;
   }
   // 1 вариант вызова замкнутой функции
   checkScope()();                                 //👈 таким способом вызывается вторая безымянная функция
@@ -512,6 +512,26 @@ console.clear();
   // 2 вариант вызова замкнутой функции
   let newGreeting = makeGreeting();
   newGreeting("Dave");
+
+  // Пример 3.
+  function myName(firstName, lastName){
+    let greet = "Hello ";
+    function fullName() {
+      return (`${greet} ${firstName} ${lastName}`); 
+    }
+    return fullName();
+  }
+  myName("Rafael", "Solomko");
+
+  // Пример 4.
+  function myName2(firstName, lastName){
+      let greet = "Hello";
+      return {
+        get greeting() {return (`${greet} ${firstName} ${lastName}`);},
+      }
+    }
+  let cc2 = myName2("Rafael","Solomko");
+  cc2.greeting;
 
   // ВАЖНО 🔥🔥🔥 SCOPE -> область видимости функции и CLOSURE -> замыкание
   let abc = 123;
