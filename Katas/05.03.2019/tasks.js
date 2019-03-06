@@ -125,6 +125,8 @@ function ranking4(people) {
   return arr
 }
 
+
+// Big O
 function ranking5(arr) {
     for (var i=0; i<arr.length-1; ++i)
       for (var j=i+1; j<arr.length; ++j)
