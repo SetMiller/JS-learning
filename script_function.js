@@ -1,4 +1,4 @@
-"use strict"
+// "use strict"
 const FUNCTIONS = 'тема изучения - Функции'
 console.log(`${FUNCTIONS}`);
 console.log(`-----------------------------------------------------`);
@@ -689,6 +689,15 @@ function celebrityIDCreator2 (theCelebrities) {
   var i;
   var uniqueID = 100;
   for (i = 0; i < theCelebrities.length; i++) {
+      // Recall that theCelebrities now has the value of [{name:”Stallone”, id:0}, {name:”Cruise”, id:0}, {name:”Willis”, id:0}]
+      // The first set of square brackets, theCelebrities[i], calls an object by its array position. 
+      // If i = 0 then theCelebreties[i] is equal to the first object in the array, in this case, {name:”Stallone”, id:0}.
+      // The second set of brackets, [“id”], call that object’s property by its name “id” .
+      // The rest of the statement “= function(j){….}(i)” simply reassigns the value of the property 
+      // (function(a){console.log(`самовызывающаяся функция c 1 в качестве аргумента ${a}`);}(1));🔥🔥🔥
+      // “id” from “0” to the return of the function.
+      // On the macro level {name:”Stallone”, id:0} becomes {name:”Stallone”, id:100}.
+
       // the j parametric variable is the i passed in on invocation of this IIFE
       theCelebrities[i]["id"] = function (j)  {         
           return function () {
@@ -723,6 +732,62 @@ function makeGreeting2(){
   return greeting;
 }
 
+//TODO: проанализировать и запомнить примеры определения контекста вызова функции
+// вариант 1. Контекст вызова - объект "Window" 
+// работает в нестрогом режиме👆👆👆, при объявлении переменной через "var" 
+var glob = 55;
+function getThis() {
+  return console.log(`${this.innerWidth}pix`);              //👈 this.glob -> 55
+}
+getThis();
+// document.writeln(getThis());
+
+// вариант 2. Контекст вызова - метод объекта -> функция внутри объекта
+let person = {
+  name: "Bully - пример 2",
+  surname: "HAHA - пример 2",
+  getThis: function () {return console.log(this.name)},
+  getSelf: function () {
+    let self = this.surname
+    return console.log(self);
+  }
+}
+person.getThis();
+person.getSelf();
+
+// вариант 3. Контекст вызова - установка контекста вызова - объект "person2" -> функция отдельная от объекта
+let person2 = {
+  name: "LOLLYPOP - пример 3"
+}
+function getIt() {
+  return console.log(this.name);              
+}
+person2.getName = getIt;                                    //👈 добавляем объекту "person2" метод getName: getIt()
+person2.getName();                                          //👈 this.name -> LOLLYPOP
+
+// вариант 4. Контекст вызова - изменение контекста вызова - объект "anotherPerson" -> функция отдельная от объекта
+let person3 = {
+  name: "Qully - пример 4",
+  surname: "HAHA",
+  getThis: function () {return console.log(this.name)},
+}
+
+let anotherPerson = {
+  name: "Molly - пример 4",
+}
+
+anotherPerson.takeIt = person3.getThis;
+anotherPerson.takeIt();
+
+// вариант 5. Контекст вызова - изменение контекста вызова с помощью "call"
+//TODO: рассотреть как работает метод "call", "apply", "bind" и разобраться со стрелочными функциями
+// В стрелочных функциях нет своего this. Внутри них this ссылается на контекст внешней функции. 
+// То есть, если в этом коде внутри функции sayHello  вы объявите какую-то стрелочную функцию, 
+// то ее this будет таким же как и this у sayHello - объект person.
+// 
+// 
+// 
+
 // ВАЖНО 🔥🔥🔥 -> "arguments"
 // Поскольку замыкания при вызове получают собственный объект "arguments", они не могу обращаться к массиву аргументов
 // внешней функции, если не сохранить этот массив в переменной с другим именем
@@ -734,3 +799,14 @@ function makeGreeting3(){
   };
   return greeting;
 }
+
+// ВАЖНО 🔥🔥🔥 -> самовызывающаяся функция
+// Вариант 1.
+(function(a, b){
+  console.log(a+b);
+})(22,22);
+
+// Вариант 2.
+(function(a, b){
+  console.log(a+b);
+}(33,33));
