@@ -581,39 +581,39 @@ console.clear();
  //📣 Скрытые переменные, такие как counter, не являются исключительной собственностью единственного замыкания,
  // в одной и той же внешней функции вполне возможно определить две или более сложенных функций, которые будут
  // совместно использовать одну цепочку областей видимости
- function counter() {                                //👈 обрати внимание на вариант -> counter(n)
-   let n = 0;                                        //👈 передавать начальный аргумент напрямую в функцию -> //  let n = 0;
-   return {
-     count: function() { return n++},
-     reset: function() { n = 0 },
-   };
- }; 
+  function counter() {                                //👈 обрати внимание на вариант -> counter(n)
+    let n = 0;                                        //👈 передавать начальный аргумент напрямую в функцию -> //  let n = 0;
+    return {
+      count: function() { return n++},
+      reset: function() { n = 0 },
+    };
+  }; 
 
- let c = counter();                                   //👈 инициализация начального значения -> let c = counter(10); 
- let d = counter();                                   //👈 Способ вызова 🔥🔥🔥
- d.count();                                           //👈 -> 0
- d.count();                                           //👈 -> 1
- d.reset();                                           //👈 -> 0
+  let c = counter();                                   //👈 инициализация начального значения -> let c = counter(10); 
+  let d = counter();                                   //👈 Способ вызова 🔥🔥🔥
+  d.count();                                           //👈 -> 0
+  d.count();                                           //👈 -> 1
+  d.reset();                                           //👈 -> 0
 
 //📣 Версия функции counter() является вариацией примера, представленного в разделе 6.6, но здесь для хранения
 // скрытой информации вместо обычного свойства объекта используются замыкания
 // ВАЖНО 🔥🔥🔥 эта версия функции не объявляет локальную переменную. Для сохранения информации используется параметр
 // "n", доступный обоим методам доступа к свойству. Это позволяет программе, вызывающей counterUpdate(n), определять
 // начальное значение скрытой переменной. 
-function counterUpdate(n) {
-  return {
-    get count() { return n++ },
-    set count(m) {
-      if (m > n) n = m;
-      else throw Error('значение счетчика нельзя уменьшить');
-    },
+  function counterUpdate(n) {
+    return {
+      get count() { return n++ },
+      set count(m) {
+        if (m > n) n = m;
+        else throw Error('значение счетчика нельзя уменьшить');
+      },
+    };
   };
-};
 
-let cc = counterUpdate(5);                            //👈 инициализация начального значения 
-let dd = counterUpdate(2);                            //👈 Вызов d.count; d.count = 2;🔥🔥🔥 <- без скобок !!!!
-dd.count;                                             //👈 -> 2
-dd.count;                                             //👈 -> 3
+  let cc = counterUpdate(5);                            //👈 инициализация начального значения 
+  let dd = counterUpdate(2);                            //👈 Вызов d.count; d.count = 2;🔥🔥🔥 <- без скобок !!!!
+  dd.count;                                             //👈 -> 2
+  dd.count;                                             //👈 -> 3
 // dd.count = 2;                                      //👈 -> Error: значение счетчика нельзя уменьшить
 //console.clear();
 
@@ -645,32 +645,32 @@ console.clear();
 // 1. вариант (неправильно😔) НЕ ВИЖУ РАЗНИЦЫ В РЕЗУЛЬТАТАХ🐙🐙 примера 1.
 // пример 1.
 // Возвращает массив функция, возвращающих значения 0-9
-function constFuncs() {
-  let funcs2 = [];
-  for(let i = 0; i < 10; i++) {
-    funcs2[i] = function() {return i};
-  }
-  return funcs2;
-};
-let funcs2 = constFuncs();
-funcs2[5]();                                          //👈 -> 5
+  function constFuncs() {
+    let funcs2 = [];
+    for(let i = 0; i < 10; i++) {
+      funcs2[i] = function() {return i};
+    }
+    return funcs2;
+  };
+  let funcs2 = constFuncs();
+  funcs2[5]();                                          //👈 -> 5
 
 // пример 2.
-function celebrityIDCreator (theCelebrities) {
-  var i;
-  var uniqueID = 100;
-  for (i = 0; i < theCelebrities.length; i++) {
-    theCelebrities[i]["id"] = function ()  {
-      return uniqueID + i;
+  function celebrityIDCreator (theCelebrities) {
+    var i;
+    var uniqueID = 100;
+    for (i = 0; i < theCelebrities.length; i++) {
+      theCelebrities[i]["id"] = function ()  {
+        return uniqueID + i;
+      }
     }
+    
+    return theCelebrities;
   }
-  
-  return theCelebrities;
-}
-var actionCelebs = [{name:"Stallone", id:0}, {name:"Cruise", id:0}, {name:"Willis", id:0}];
-var createIdForActionCelebs = celebrityIDCreator (actionCelebs);
-var stalloneID = createIdForActionCelebs [0];
-console.log(stalloneID.id()); // 103
+  var actionCelebs = [{name:"Stallone", id:0}, {name:"Cruise", id:0}, {name:"Willis", id:0}];
+  var createIdForActionCelebs = celebrityIDCreator (actionCelebs);
+  var stalloneID = createIdForActionCelebs [0];
+  console.log(stalloneID.id()); // 103
 
 // 2. вариант (правильно😄)
 // пример 1.
@@ -685,102 +685,112 @@ console.log(stalloneID.id()); // 103
 // funcs[5]();                                           //👈 -> 5
 
 // пример 2.
-function celebrityIDCreator2 (theCelebrities) {
-  var i;
-  var uniqueID = 100;
-  for (i = 0; i < theCelebrities.length; i++) {
-      // Recall that theCelebrities now has the value of [{name:”Stallone”, id:0}, {name:”Cruise”, id:0}, {name:”Willis”, id:0}]
-      // The first set of square brackets, theCelebrities[i], calls an object by its array position. 
-      // If i = 0 then theCelebreties[i] is equal to the first object in the array, in this case, {name:”Stallone”, id:0}.
-      // The second set of brackets, [“id”], call that object’s property by its name “id” .
-      // The rest of the statement “= function(j){….}(i)” simply reassigns the value of the property 
-      // (function(a){console.log(`самовызывающаяся функция c 1 в качестве аргумента ${a}`);}(1));🔥🔥🔥
-      // “id” from “0” to the return of the function.
-      // On the macro level {name:”Stallone”, id:0} becomes {name:”Stallone”, id:100}.
+  function celebrityIDCreator2 (theCelebrities) {
+    var i;
+    var uniqueID = 100;
+    for (i = 0; i < theCelebrities.length; i++) {
+        // Recall that theCelebrities now has the value of [{name:”Stallone”, id:0}, {name:”Cruise”, id:0}, {name:”Willis”, id:0}]
+        // The first set of square brackets, theCelebrities[i], calls an object by its array position. 
+        // If i = 0 then theCelebreties[i] is equal to the first object in the array, in this case, {name:”Stallone”, id:0}.
+        // The second set of brackets, [“id”], call that object’s property by its name “id” .
+        // The rest of the statement “= function(j){….}(i)” simply reassigns the value of the property 
+        // (function(a){console.log(`самовызывающаяся функция c 1 в качестве аргумента ${a}`);}(1));🔥🔥🔥
+        // “id” from “0” to the return of the function.
+        // On the macro level {name:”Stallone”, id:0} becomes {name:”Stallone”, id:100}.
 
-      // the j parametric variable is the i passed in on invocation of this IIFE
-      theCelebrities[i]["id"] = function (j)  {         
-          return function () {
-              // each iteration of the for loop passes the current value of i into this IIFE and 
-              // it saves the correct value to the array
-              return uniqueID + j;     
-          // BY adding () at the end of this function, we are executing it immediately 
-          // and returning just the value of uniqueID + j, instead of returning a function.                 
-          } () 
-      // immediately invoke the function passing the i variable as a parameter
-      } (i); 
+        // the j parametric variable is the i passed in on invocation of this IIFE
+        theCelebrities[i]["id"] = function (j)  {         
+            return function () {
+                // each iteration of the for loop passes the current value of i into this IIFE and 
+                // it saves the correct value to the array
+                return uniqueID + j;     
+            // BY adding () at the end of this function, we are executing it immediately 
+            // and returning just the value of uniqueID + j, instead of returning a function.                 
+            } () 
+        // immediately invoke the function passing the i variable as a parameter
+        } (i); 
+    }
+    return theCelebrities;
   }
-  return theCelebrities;
-}
-var actionCelebs = [{name:"Sigal", id:0}, {name:"Shvarts", id:0}, {name:"Carry", id:0}];
-var createIdForActionCelebs = celebrityIDCreator2 (actionCelebs);
-var sigalID = createIdForActionCelebs [0];
-console.log(sigalID.id); // 100
-var carryID = createIdForActionCelebs [1];
-console.log(carryID.id); // 101
+  var actionCelebs = [{name:"Sigal", id:0}, {name:"Shvarts", id:0}, {name:"Carry", id:0}];
+  var createIdForActionCelebs = celebrityIDCreator2 (actionCelebs);
+  var sigalID = createIdForActionCelebs [0];
+  console.log(sigalID.id); // 100
+  var carryID = createIdForActionCelebs [1];
+  console.log(carryID.id); // 101
 
 
 // ВАЖНО 🔥🔥🔥 -> "this"
 // Чтобы вложенные функции получили доступ к значению "this" внешней функции, следует сохранить значение "this"
 // в переменной для использования во вложенной функции
-function makeGreeting2(){
-  let myName = 'Alex';
-  let selfThis = this;
-  function greeting(personName){
-    return console.log(`Hello, ${personName}! My name's ${myName}.`);
-  };
-  return greeting;
-}
+  function makeGreeting2(){
+    let myName = 'Alex';
+    let selfThis = this;
+    function greeting(personName){
+      return console.log(`Hello, ${personName}! My name's ${myName}.`);
+    };
+    return greeting;
+  }
 
 //TODO: проанализировать и запомнить примеры определения контекста вызова функции
 // вариант 1. Контекст вызова - объект "Window" 
 // работает в нестрогом режиме👆👆👆, при объявлении переменной через "var" 
-var glob = 55;
-function getThis() {
-  return console.log(`${this.innerWidth}pix`);              //👈 this.glob -> 55
-}
-getThis();
+  var glob = 55;
+  function getThis() {
+    return console.log(`${this.innerWidth}pix`);              //👈 this.glob -> 55
+  }
+  getThis();
 // document.writeln(getThis());
 
 // вариант 2. Контекст вызова - метод объекта -> функция внутри объекта
-let person = {
-  name: "Bully - пример 2",
-  surname: "HAHA - пример 2",
-  getThis: function () {return console.log(this.name)},
-  getSelf: function () {
-    let self = this.surname
-    return console.log(self);
+  let person = {
+    name: "Bully - пример 2",
+    surname: "HAHA - пример 2",
+    getThis: function () {return console.log(this.name)},
+    getSelf: function () {
+      let self = this.surname
+      return console.log(self);
+    }
   }
-}
-person.getThis();
-person.getSelf();
+  person.getThis();
+  person.getSelf();
 
 // вариант 3. Контекст вызова - установка контекста вызова - объект "person2" -> функция отдельная от объекта
-let person2 = {
-  name: "LOLLYPOP - пример 3"
-}
-function getIt() {
-  return console.log(this.name);              
-}
-person2.getName = getIt;                                    //👈 добавляем объекту "person2" метод getName: getIt()
-person2.getName();                                          //👈 this.name -> LOLLYPOP
+  let person2 = {
+    name: "LOLLYPOP - пример 3"
+  }
+  function getIt() {
+    return console.log(this.name);              
+  }
+  person2.getName = getIt;                                    //👈 добавляем объекту "person2" метод getName: getIt()
+  person2.getName();                                          //👈 this.name -> LOLLYPOP
 
 // вариант 4. Контекст вызова - изменение контекста вызова - объект "anotherPerson" -> функция отдельная от объекта
-let person3 = {
-  name: "Qully - пример 4",
-  surname: "HAHA",
-  getThis: function () {return console.log(this.name)},
-}
+  let person3 = {
+    name: "Qully - пример 4",
+    surname: "HAHA",
+    getThis: function () {return console.log(this.name)},
+  }
 
-let anotherPerson = {
-  name: "Molly - пример 4",
-}
+  let anotherPerson = {
+    name: "Molly - пример 4",
+    x: 4,
+  }
 
-anotherPerson.takeIt = person3.getThis;
-anotherPerson.takeIt();
+  anotherPerson.takeIt = person3.getThis;
+  anotherPerson.takeIt();
 
-// вариант 5. Контекст вызова - изменение контекста вызова с помощью "call"
-//TODO: рассотреть как работает метод "call", "apply", "bind" и разобраться со стрелочными функциями
+// вариант 5. Контекст вызова - изменение контекста вызова с помощью "call"🐴 и "apply"🐮
+  function yes(x) {
+    return console.log(`пример 5: this.name -> ${this.name} x * x = ${x * x}`);
+  }
+  
+  yes.call(person);                                     //👈 this.name -> Bully - пример 2 x * x = NaN
+  yes.call(person2);                                    //👈 this.name -> LOLLYPOP - пример 3 x * x = NaN
+  yes.call(anotherPerson, 4);                           //👈 this.name -> Molly - пример 4 x * x = 16
+  yes.apply(anotherPerson, [3]);                        //👈 this.name -> Molly - пример 4 x * x = 9
+
+//TODO: рассмотреть как работает метод "call", "apply", "bind" и разобраться со стрелочными функциями
 // В стрелочных функциях нет своего this. Внутри них this ссылается на контекст внешней функции. 
 // То есть, если в этом коде внутри функции sayHello  вы объявите какую-то стрелочную функцию, 
 // то ее this будет таким же как и this у sayHello - объект person.
@@ -791,22 +801,123 @@ anotherPerson.takeIt();
 // ВАЖНО 🔥🔥🔥 -> "arguments"
 // Поскольку замыкания при вызове получают собственный объект "arguments", они не могу обращаться к массиву аргументов
 // внешней функции, если не сохранить этот массив в переменной с другим именем
-function makeGreeting3(){
-  let myName = 'Alex';
-  let selfArguments = arguments;
-  function greeting(personName){
-    return console.log(`Hello, ${personName}! My name's ${myName}.`);
-  };
-  return greeting;
-}
+  function makeGreeting3(){
+    let myName = 'Alex';
+    let selfArguments = arguments;
+    function greeting(personName){
+      return console.log(`Hello, ${personName}! My name's ${myName}.`);
+    };
+    return greeting;
+  }
 
 // ВАЖНО 🔥🔥🔥 -> самовызывающаяся функция
 // Вариант 1.
-(function(a, b){
-  console.log(a+b);
-})(22,22);
+  (function(a, b){
+    console.log(a+b);
+  })(22,22);
 
 // Вариант 2.
-(function(a, b){
-  console.log(a+b);
-}(33,33));
+  (function(a, b){
+    console.log(a+b);
+  }(33,33));
+
+console.clear();
+
+//7 Свойства и методы функций и конструктор Function
+// 1️⃣ Свойство length
+// В теле функции свойство arguments.length определяет количество аргументов, переданных функции. Однако свойство length
+// самой функции имеет иной смысл. Это свойство, доступное только для чтения, возвращает количество аргументов, которое
+// функция 🔥ожидает🔥 получить - число объявленных параметров
+
+// Пример
+  // функция использует arguments.callee, потому не будет работать в строгом режиме🔥🔥🔥
+  function check(args) {
+    let actual = args.length;                           //👈 фактическое число аргументов
+    let expected = args.callee.length;                  //👈 ожидаемое число аргументов
+    if (actual !== expected) {                          //👈 если не совпадают, генерируется исключение
+      throw new Error("ожидается: " + expected + "; получено: " + actual);
+    }
+    else {
+      console.log(actual);
+      console.log(expected);
+    }
+  }
+
+  function f(x, y, z) {
+    // Проверить число ожидаемых и фактических переданных аргументов
+    check(arguments);
+    // Теперь выполнить оставшуюся часть функции как обычно
+    return x + y+ z;
+  }
+  f(1, 2, 3);                                           //👈 -> 6
+  // f(1, 2);                                           //👈 -> Error: ожидается: 3; получено: 2
+
+// 2️⃣ Свойство prototipe
+// Любая функция имеет свойство prototipe, ссылающееся на объект, известный как объект прототипа.
+// Каждая функция имеет свой объект прототипа. Когда функция используется в роли конструктора, вновь созданный
+// объект наследует свойства этого объекта прототипа.
+
+// 3️⃣ Методы call()🐶 и apply()🐱
+// Методы call() и apply() позволяют выполнять косвенный вызов функции, как если бы она была методом некоторого другого объекта
+// Первым аргументом обоим методам передается объект, относительно которого вызывается функция
+// Этот аргумент определяет контекст вызова и становится значением ключевого слова this в теле функции.
+// Метод call() -> аргументы передаются списком🐶
+// Метод apply() -> аргументы передаются массивом🐱
+
+  function f2(z) {
+    // Проверить число ожидаемых и фактических переданных аргументов
+    check(arguments);
+    // Теперь выполнить оставшуюся часть функции как обычно
+    return console.log(this.x + this.y+ z);
+  }
+
+  f2.call(o, 10);         //👈 f(thisArgs, ...argsArray) -> 60
+  f2.apply(o, [20]);      //👈 f(thisArgs, ...argsArray) -> 60
+
+  // Эти вызовы эквивалентны следующим
+  // o.m = f2();
+  // o.m(10);
+  // delete o.m;
+
+// В строгом режиме ECMAScript 5 первый аргумент методов call()🐶 и apply()🐱 становится значением this
+// даже если это простое значение, null или undefined
+// В ECMAScript 3 и в нестрогом режиме значения null и undefined замещаются глобальным объектом, а простое
+// значение - соответствующим объектом-оберткой
+
+  let biggest = Math.max.apply(Math, aa);
+
+  // Пример
+  // Функция trace() принимает объект и имя метода
+  // Она замещает указанный метод новым методом, который "обертывает" оригинальный метод доп. функциональностью
+  function trace(o, m) {
+    // сохранить оригинальный метод в замыкании
+    let original = o[m];
+    // определить новый метод
+    o[m] = function() {
+      console.log(newDate(), "Entering:", m);                 //записать сообжение | неясно назначение newDate()😔
+      let result = original.apply(this, arguments);           //вызвать оригинал
+      console.log(newDate(), "Exiting:", m);                  //записать сообщение | неясно назначение newDate()😔
+      return result;                                          //вернуть результат
+    };
+  }
+
+// 4️⃣ Методы bind()🐭
+// Метод bind() впервые появился в ECMAScript 5, но его легко имитировать в ECMAScript 3
+// Основное назначение метода bind() -> связать функцию с объектом.
+// Если вызвать метод bind() функции f4() и передать ему объект "о", он вернет новую функцию
+// Вызов новой функции выполнит вызов оригинальной функции f4() как метода объекта "о"💎💎💎
+
+  function f4(y) {return this.x + y};                       //👈 функция, которую требуется привязать
+  let o3 = {x: 20};                                         //👈 объект, к которому выполняется привязка
+  let g3 = f4.bind(o3);                                     //👈 вызов "g3" вызовет o.f4(y)
+  console.log(g3(10));                                      // -> 30
+
+  // Имитация метода bind()
+  function bind (f, o) {
+    if (f.bind) return f.bind(o);                           //👈 использовать метод, если имеется
+    else return function () {                               //👈 иначе связать, как показано ниже
+      return f.apply(o, arguments);
+    };
+  }
+  let g4 = bind(f4, o3);
+  console.log(g4(5));                                       // -> 25
