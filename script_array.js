@@ -395,6 +395,14 @@ console.clear();
     // }
     //🔥
 
+    // Своя реализация функции map()
+    function map(a,f) {                                                     //👈 "a" -> array, "f" -> callbackfn
+      var results = [];
+      for(var i = 0, len = a.length; i < len; i++) {
+        if (i in a) results[i] = f.call(null, a[i], i, a);
+      }
+      return results;
+    };
 
 // 📣 3️⃣ Метод filter();
 // 📣 Метод filter() возвращает массив, содержащий подмножество элементов исходного массива. 
@@ -446,6 +454,33 @@ console.clear();
     let sumReduce = numbers2.reduce((x, y) => {return parseInt(x) + parseInt(y)}, 0);       //👈 возвращает => 43 typeof -> "number"
     let productReduce = numbers2.reduce((x, y) => {return parseInt(x) * parseInt(y)}, 1);   //👈 возвращает => 1680000 typeof -> "number"
     let maxReduce = numbers2.reduce((x, y) => {return parseInt(x) > parseInt(y) ? parseInt(x) : parseInt(y)}, 0);    //👈 возвращает наибольшее значение 20 typeof -> "number"
+
+    // Своя реализация функции reduce()
+    // Этот алгоритм взят из спецификации ES5 
+    function reduce(a, f, initial) { 
+      var i = 0, len = a.length, accumulator;
+      // Использовать указанное начальное значение или первый элемент "a"
+      if (arguments.length > 2) accumulator = initial;
+      // Найти первый элемент массива с определенным значением
+      else {
+        if (len == 0) throw TypeError();
+        while(i < len) {
+          if (i in a) {
+            accumulator = a[i++];
+            break;
+          }
+          else i++;
+        }
+        if (i == len) throw TypeError();
+      }
+      // Теперь вызвать "f" для каждого оставшегося элемента массива
+      while(i < len) {
+        if (i in a)
+          accumulator = f.call(undefined, accumulator, a[i], i, a);
+          i++;
+      }
+      return accumulator;
+    };
 
 
  // 📣 Если необходимо свернуть массив объектов в один объект, то можно использовать функцию union().
