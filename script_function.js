@@ -1143,7 +1143,7 @@ console.clear();
   }
 
   let gcdMemo = memoize(gcd);
-  console.log(gcdMemo(88, 187));
+  console.log(gcdMemo(37, 200));
 
   // Обратить внимание, что при мемоизации рекурсивных функций желательно, чтобы рекурсия выполнялась 
   // в мемоизованной версии, а не в оригинале
@@ -1151,3 +1151,4 @@ console.clear();
     return (n <= 1) ? n : n * memoFactorial(n - 1);
   })
   console.log(memoFactorial(5));
+
