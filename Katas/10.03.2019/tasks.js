@@ -123,4 +123,4 @@ function digPow(n, p){
                 .reduce((x, y) => {return x + y}, 0)
   if (digits%n != 0) return -1;
   else return digits / n;
-}ж
+};
