@@ -33,3 +33,36 @@ function whoWouldWin(mon1, mon2) {
     if (totalHP1 <= 0) return `${mon2["number"]} ${mon2["type"]}(s) won`;
   };
 }
+
+// Лучший варианты 💎💎💎💎
+function whoWouldWin2(mon1, mon2) {
+  let allHP1 = mon1.number * mon1.hitpoints;
+  let allHP2 = mon2.number * mon2.hitpoints;
+  while (mon1.number > 0 && mon2.number > 0) {
+    allHP2 -= mon1.number * mon1.damage;
+    mon2.number = Math.ceil(allHP2/mon2.hitpoints);
+    if(mon2.number <= 0) break;
+    allHP1 -= mon2.number * mon2.damage;
+    mon1.number = Math.ceil(allHP1/mon1.hitpoints);
+  }
+  return (mon1.number > 0) ? (`${mon1.number} ${mon1.type}(s) won`) : (`${mon2.number} ${mon2.type}(s) won`);
+}
+
+
+// Мой доработанный вариант
+function whoWouldWin3(mon1, mon2) {
+  let totalHP1 = mon1["hitpoints"] * mon1["number"];
+  let totalHP2 = mon2["hitpoints"] * mon2["number"];
+  while (mon1.number > 0 && mon2.number > 0) {
+    totalHP2 -= mon1["number"] * mon1["damage"];
+    mon2["number"] = Math.ceil(totalHP2 / mon2["hitpoints"]);
+    // mon2["hitpoints"] = totalHP2 - (mon2["number"] - 1) * hp2;
+    // atk2 = mon2["number"] * mon2["damage"];
+    if(mon2["number"] <= 0) break;
+    totalHP1 -= mon2["number"] * mon2["damage"];
+    mon1["number"] = Math.ceil(totalHP1 / mon1["hitpoints"]);
+    // mon1["hitpoints"] = totalHP1 - (mon1["number"] - 1) * hp1;
+    // atk1 = mon1["number"] * mon1["damage"];
+  };
+  return (mon1["number"] > 0) ? (`${mon1["number"]} ${mon1["type"]}(s) won`) : (`${mon2["number"]} ${mon2["type"]}(s) won`);
+}

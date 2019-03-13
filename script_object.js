@@ -398,4 +398,27 @@ console.clear();
         }
     );
 
+ // ******************************************* ⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️ ************************************************ //
+ 
+//  Ображение к свойствам объекта (Ссылка или значение)
+
+  var person = {
+    name: "Sam",
+    age: 25,
+    hobbies: ['Sports', 'Programming']
+  }
+  console.log(person);
+  
+  var secondPerson = Object.assign({}, person);
+  console.log(secondPerson);
+
+//   var myHobbies = person.hobbies;                             //👈 В этом случае при вызове myHobbies мы все равно будем видеть ['Sports', 'Programming', 'Reading']
+  var myHobbies = person.hobbies.slice();                        //👈 В данно млучае метод slice() без аргументов возвращает исходный массив, без привязки к нему 🔥🔥🔥
+
+  person.name = "Jack";
+  person.hobbies.push('Reading');
+  console.log(secondPerson);
+  
+  
+  console.log(myHobbies);
   
