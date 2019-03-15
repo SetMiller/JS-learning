@@ -115,5 +115,5 @@ function assign(arr){
       })
     })
   }
-console.table(buf);
+// console.table(buf);
 
