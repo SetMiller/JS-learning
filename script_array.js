@@ -425,13 +425,13 @@ console.clear();
     let numbers = [1, 10, 15, 20, -5, 8, 14];
     let arrForEach = [];
 // Вариант 1 -> изменить исходный массив и копировать его значения в другой
-    numbers.forEach((itemVolume, index, arr) => {arr[index] = itemVolume + 1});         //👈 Изменит исходный массив => [2, 11, 16, 21, -4, 9, 15]
-    numbers.forEach(function(itemVolume) {arrForEach.push(itemVolume * 2)});            //👈 arrForEach = [2, 20, 30, 40, -10, 16, 28]
-    // numbers.forEach((itemVolume, index, arr) => {arr[index] = itemVolume + '1'});    //👈 Изменит исходный массив => ["11", "101", "151", "201", "-51", "81", "141"]
+    numbers.forEach((itemValue, index, arr) => {arr[index] = itemValue + 1});           //👈 Изменит исходный массив => [2, 11, 16, 21, -4, 9, 15]
+    numbers.forEach(function(itemValue) {arrForEach.push(itemValue * 2)});              //👈 arrForEach = [2, 20, 30, 40, -10, 16, 28]
+    // numbers.forEach((itemValue, index, arr) => {arr[index] = itemValue + '1'});    //👈 Изменит исходный массив => ["11", "101", "151", "201", "-51", "81", "141"]
 
 // Вариант 2 -> копировать значения массива во второй и уже в нем изменить значения
     numbers.forEach(function(item) {arrForEach.push(item)}); 
-    arrForEach.forEach((itemVolume, index, arr) => {arr[index] = itemVolume * 2});      //👈 arrForEach = [2, 20, 30, 40, -10, 16, 28]
+    arrForEach.forEach((itemValue, index, arr) => {arr[index] = itemValue * 2});        //👈 arrForEach = [2, 20, 30, 40, -10, 16, 28]
     
     // 🔥 аналог forEach()
     // for (let i = 0; i < numbers.length; i++) {         //👈 Изменит исходный массив => [3, 12, 17, 22, -3, 10, 16]
@@ -441,7 +441,7 @@ console.clear();
   
 // Найти сумму всех элементов массива (свертка массива)
     let sum = 0;
-    numbers.forEach((itemVolume) => {sum += itemVolume});                               //👈 sum => 70
+    numbers.forEach((itemValue) => {sum += itemValue});                               //👈 sum => 70
 
 // Вариант функционального программирования:
     function summ(item){sum += item};                                                   //👈 -> функция - аргумент для метода forEach()
@@ -478,19 +478,19 @@ console.clear();
 // Изменить тип данных с String на Number
     let numbers2 =    ["1", "-10", "15", "20", "-5", "8", "14"];
     let numb =        numbers2.map((i) => {return parseInt(i)});                                //👈 новый массив => [1, -10, 15, 20, -5, 8, 14]
-    let numbLength =  numbers2.map(function(itemVolume){return itemVolume.length});             //👈 => [1, 3, 2, 2, 2, 1, 2]
+    let numbLength =  numbers2.map(function(itemValue){return itemValue.length});             //👈 => [1, 3, 2, 2, 2, 1, 2]
     // Изменяет тип данных в самом себе String -> Numbers
-    numbers2.map(function(itemVolume, index, arr){return arr[index] = parseInt(itemVolume)});   //👈 => [1, -10, 15, 20, -5, 8, 14]
-    numbers2.map(function(itemVolume, index, arr){return arr[index].toString()});               //👈 => ["1", "-10", "15", "20", "-5", "8", "14"]
+    numbers2.map(function(itemValue, index, arr){return arr[index] = parseInt(itemValue)});   //👈 => [1, -10, 15, 20, -5, 8, 14]
+    numbers2.map(function(itemValue, index, arr){return arr[index].toString()});               //👈 => ["1", "-10", "15", "20", "-5", "8", "14"]
     // Собираем возвращаемые значения в новый массив
-    let numb2 = numbers.map(function(itemVolume){return parseInt(itemVolume)});                 //👈 => [1, -10, 15, 20, -5, 8, 14]
-    let numb3 = numbers.map(function(itemVolume){return itemVolume});                           //👈 => ["1", "-10", "15", "20", "-5", "8", "14"]
+    let numb2 = numbers.map(function(itemValue){return parseInt(itemValue)});                 //👈 => [1, -10, 15, 20, -5, 8, 14]
+    let numb3 = numbers.map(function(itemValue){return itemValue});                           //👈 => ["1", "-10", "15", "20", "-5", "8", "14"]
     // Вариант функционального программирования:
-    const itemVolumeLength =  function(itemVolume){return itemVolume.length};
-    const itemVolumeParse =   function(itemVolume){return parseInt(itemVolume)};
+    const itemValueLength =   function(itemValue){return itemValue.length};
+    const itemValueParse =    function(itemValue){return parseInt(itemValue)};
     const mapFunc =           function(arr, func){return arr.map(func)};
-    let numbLength2 =         mapFunc(numbers2, itemVolumeLength);                              //👈 => [1, 3, 2, 2, 2, 1, 2]
-    let numbParseInt =        mapFunc(numbers2, itemVolumeParse);                               //👈 => [1, -10, 15, 20, -5, 8, 14]
+    let numbLength2 =         mapFunc(numbers2, itemValueLength);                              //👈 => [1, 3, 2, 2, 2, 1, 2]
+    let numbParseInt =        mapFunc(numbers2, itemValueParse);                               //👈 => [1, -10, 15, 20, -5, 8, 14]
 
     // Aналог 
     // let numb = [];
@@ -511,7 +511,6 @@ console.clear();
 // 📣 Метод filter() возвращает массив, содержащий подмножество элементов исходного массива. 
 // 📣 Передаваемая ему функция должна сожержать условие и возвращать значение true или false.
 // 📣 Возвращает новый массив 🔥🔥🔥🔥🔥🔥
-
     let positive =  numbers2.filter((i) => {return i > 0});             //👈 новый массив с типом String => ["1", "15", "20", "8", "14"]
     let negative =  numbers2.filter((i) => {return i < 0});             //👈 новый массив с типом String => ["-10", "-5"]
     let even =      numbers2.filter((i) => {return i%2 == 0});          //👈 новый массив с типом String => ["-10", "20", "8", "14"]
@@ -533,20 +532,37 @@ console.clear();
 // 📣 Метод проверяет передаваемый массив на выполнение условия, возвращающего true или false🔥🔥🔥 "boolean". 
 // 📣 Метод every() возвращает true, если функция с условием вернула true для всех элементов массива.
 // 📣 Для пустого массива [] возвращает true.
+    let everyPositive = numbers2.every((x) => {return x > 0});            //👈 возвращает "boolean" => false
+    let everyLow =      numbers2.every((x) => {return x < 100});          //👈 возвращает "boolean" => true
+    let everyOdd =      numbers2.every((x) => {return x%2 == 0});         //👈 возвращает "boolean" => false
 
-    let everyPositive = numbers2.every((x) => {return x > 0});      //👈 возвращает "boolean" => false
-    let everyLow = numbers2.every((x) => {return x < 100});         //👈 возвращает "boolean" => true
-    let everyOdd = numbers2.every((x) => {return x%2 == 0});        //👈 возвращает "boolean" => false
+    // Вариант функционального программирования:
+    const everyPositiveFunc = function(x) {return x > 0};
+    const everyLowFunc =      function(x) {return x < 100};
+    const everyOddFunc =      function(x) {return x%2 == 0};
+    const everyFunc =         function(arr, func) {return arr.every(func)};
 
+    let everyLow2 =        everyFunc(numb, everyLowFunc);                        //👈 -> true
+    let everyOdd2 =        everyFunc(numb, everyOddFunc);                        //👈 -> false
+    let everyPositive2 =   everyFunc(numb, everyPositiveFunc);                   //👈 -> false
 
 // 📣 4️⃣ Метод some();
 // 📣 Метод проверяет передаваемый массив на выполнение условия, возвращающего true или false🔥🔥🔥 "boolean". 
 // 📣 Метод some() возвращает true, если функция с условием вернула true для любого из элементов массива.
 // 📣 Для пустого массива [] возвращает false.
-    
-    let somePositive = numbers2.some((x) => {return x > 0});                  //👈 возвращает "boolean" => true
-    let someString = numbers2.some((x) => {return typeof(x) == "string"});    //👈 возвращает "boolean" => true
-    let someOdd = numbers2.some((x) => {return x%2 == 0});                    //👈 возвращает "boolean" => true
+    let somePositive =  numbers2.some((x) => {return x > 0});                       //👈 возвращает "boolean" => true
+    let someString =    numbers2.some((x) => {return typeof(x) == "string"});       //👈 возвращает "boolean" => true
+    let someOdd =       numbers2.some((x) => {return x%2 == 0});                    //👈 возвращает "boolean" => true
+
+    // Вариант функционального программирования и ES6:
+    const somePositiveFunc =  (x) => {return x > 0};
+    const someNumberFunc =    (x) => {return typeof(x) == "number"};
+    const someOddFunc =       (x) => {return x%2 == 0};
+    const someFunc =          (arr, func) => {return arr.some(func)};
+
+    let somePositive = someFunc(numb, somePositiveFunc);                            //👈 -> true
+    let someNumber =   someFunc(numb, someNumberFunc);                              //👈 -> true
+    let someOdd =      someFunc(numb, someOddFunc);                                 //👈 -> true
 
 // 📣 5️⃣ Метод reduce() (reduceRight());
 // 📣 Метод reduce() (reduceRight()) объединяет элементы массива, используя указанную функцию и возвращает единственное значение(свертка). 
@@ -568,6 +584,16 @@ console.clear();
     let sumReduce = numbers2.reduce((x, y) => {return parseInt(x) + parseInt(y)}, 0);       //👈 возвращает => 43 typeof -> "number"
     let productReduce = numbers2.reduce((x, y) => {return parseInt(x) * parseInt(y)}, 1);   //👈 возвращает => 1680000 typeof -> "number"
     let maxReduce = numbers2.reduce((x, y) => {return parseInt(x) > parseInt(y) ? parseInt(x) : parseInt(y)}, 0);    //👈 возвращает наибольшее значение 20 typeof -> "number"
+
+    // Вариант функционального программирования и ES6:
+    const sumReduceFunc = (x, y) => {return x + y};
+    const productReduceFunc = (x, y) => {return x * y};
+    const maxReduceFunc = (x, y) => {return x > y ? x : y};
+    const reduceFunc = (arr, func, initialValue) => {return arr.reduce(func, initialValue)};
+
+    let sumReduce2 = reduceFunc(numb, sumReduceFunc, 0);                                  //👈 -> 43
+    let productReduce2 = reduceFunc(numb, productReduceFunc, 1);                          //👈 -> 1680000
+    let maxReduce2 = reduceFunc(numb, maxReduceFunc);                                     //👈 -> 20
 
     // Своя реализация функции reduce()
     // Этот алгоритм взят из спецификации ES5 
@@ -596,7 +622,6 @@ console.clear();
       return accumulator;
     };
 
-
  // 📣 Если необходимо свернуть массив объектов в один объект, то можно использовать функцию union().
  // эта функция принимает два объекта и возвращает другой объект.
 
@@ -610,14 +635,14 @@ console.clear();
     function union(o, p) {return extend(extend({}, o), p);};
 
     let objects = [{x: 1}, {y: 2}, {z: 3}];
-    let merjed = objects.reduce(union);           //👈 возвращает "object" => {x: 1, y: 2, z: 3}
+    let merjed =  objects.reduce(union);           //👈 возвращает "object" => {x: 1, y: 2, z: 3}
 
 // 📣 🔥🔥🔥🔥🔥🔥 напомню, что когда два объекта имеют свойства с одинаковыми именами, функция union() использует значения
 // второго аргумента, т.е. методы reduce() и reduceRigth() могут дать разные результаты при использовании функции union()
 
     let objects2 = [{x: 1, a: 1}, {y: 2, a: 2}, {z: 3, a: 3}];
-    let leftMerjed = objects2.reduce(union);                      //👈 возвращает "object" => {x: 1🔥, a: 3🔥, y: 2, z: 3🔥}
-    let rightMerjed = objects2.reduceRight(union);                //👈 возвращает "object" => {z: 3🔥, a: 1🔥, y: 2, x: 1🔥}
+    let leftMerjed =  objects2.reduce(union);                       //👈 возвращает "object" => {x: 1🔥, a: 3🔥, y: 2, z: 3🔥}
+    let rightMerjed = objects2.reduceRight(union);                  //👈 возвращает "object" => {z: 3🔥, a: 1🔥, y: 2, x: 1🔥}
 
 // 📣 6️⃣ Метод indexOf() (lastIndexOf());
 // 📣 Метод indexOf() (lastIndexOf()) отыскивает в массиве элемент с указанным значением и возвращает индекс первого найденного элемента 
@@ -628,9 +653,9 @@ console.clear();
 // 📣 Метод indexOf() обрабатывает массив слева направо, метод lastIndexOf() обрабатывает массив справа налево
 
     let ar = [10, 20, 30, 40, 30, 20, 10];
-    let leftIndex = ar.indexOf(30);                               //👈 возвращает "number" => 2
-    let rigthIndex = ar.lastIndexOf(30);                          //👈 возвращает "number" => 4
-    let noneIndex = ar.indexOf(50);                               //👈 возвращает "number" => -1, т.к. искомый элемент отсутствует в массиве.
+    let leftIndex =   ar.indexOf(30);                               //👈 возвращает "number" => 2
+    let rigthIndex =  ar.lastIndexOf(30);                           //👈 возвращает "number" => 4
+    let noneIndex =   ar.indexOf(50);                               //👈 возвращает "number" => -1, т.к. искомый элемент отсутствует в массиве.
 
 // 📣 Работа со вторым аргументом метода indexOf() (lastIndexOf())
 // Функция отыскивает заданное значение в массиве и возвращает массив всех индексов, где было найдено совпадение.
@@ -648,26 +673,23 @@ console.clear();
       }
       return result;                                      //👈 Выводим массив с результатами
     }
-
+// ******************************************* ⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️ ************************************************ //
 
 //10.Тип Array
 
 // 📣 Для того чтобы отличить массив от объекта можно использовать следующие инструменты:
 // 1️⃣Array.isArray(), 2️⃣() instanceof Array, 3️⃣classof(), 4️⃣isArray(),
 // 1️⃣ Функция Array.isArray() появилась в реализации ECMAScript 5 и помогает точно отличить массив от объекта.
-
     Array.isArray([]);                                    //👈 возвращает "boolean" => true
     Array.isArray({});                                    //👈 возвращает "boolean" => false
 
 // 2️⃣ Оператор () instanceof Array возможно использовать в простых случаях, но способ относительно ненадежный🔥🔥🔥
-    
     [] instanceof Array;                                   //👈 возвращает "boolean" => true
     ({}) instanceof Array;                                 //👈 возвращает "boolean" => false
 
 // 3️⃣ Атрибут class объекта - это строка, содержащая информацию о типе объекта.
 // Поэтому, чтобы определить класс объекта, можно попробовать вызвать метод toString() этого объекта и
 // извлечь из результата подстроку с восьмого по предпоследний символ с помощью функции classof()
-
     Object.prototype.toString.call(ar);                    //👈 возвращает String => [object Array]
     Object.prototype.toString.call(ar).slice(8, -1);       //👈 возвращает String => Array
 
@@ -682,7 +704,6 @@ console.clear();
     classof(merjed);                                      //👈 возвращает String => Object
 
 // 4️⃣ В реализации ECMAScript 3 выполнить проверку атрибута class можно с помощью функции isArray()
-
     let isArray = Function.isArray || function(o) {
       return typeof o === 'object' &&
              Object.prototype.toString.call(o) === "[object Array]"   //👈 возвращает "boolean" => true/false
