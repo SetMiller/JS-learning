@@ -446,7 +446,7 @@ console.clear();
 // Вариант функционального программирования:
     function summ(item){sum += item};                                                   //👈 -> функция - аргумент для метода forEach()
     function eachFor(arr, func){arr.forEach(func)};                                     //👈 -> функция для универсального вызова метода
-    eachFor(numbers, summ)                                                              //👈 -> вызов функции -> sum = 126
+    eachFor(numbers, summ)                                                              //👈 -> вызов функции -> sum = 63
 
     //🔥 аналог forEach()
     // for (let i = 0; i < numbers.length; i++) {         //👈 Изменит исходный массив => [3, 12, 17, 22, -3, 10, 16]
@@ -456,7 +456,6 @@ console.clear();
 
 // 🔥🔥🔥 forEach() не позволяет прервать итерации, пока все элементы не будут переданы функции. Отсутствует эквивалент break!!!!!
 // Если потребуется прервать итерации раньше, внутри функции можно возбуждать исключение, а вызов forEach() помещать в блок try
-
 // Если функция, которая передается функции foreach(), возбудит исключение foreach.break, цикл будет прерван преждевременно
     function foreach(arr, func, this) {
       try {arr.forEach(func, this);}
@@ -470,25 +469,37 @@ console.clear();
 // 📣 2️⃣ Метод map();
 // 📣 Метод map() является аналогом метода forEach(), передает функции каждый элем. массива и возвращает массив значений, возвращ. этой функцией
 // 📣 15.4.4.19 Array.prototype.map ( callbackfn [ , thisArg ] ) => callback Функция, создающая элемент в новом массиве, принимает три аргумента:
-// 1. currentValue -> Текущий обрабатываемый элемент массива; 
+// 1. currentValue -> Значение текущего обрабатываемого элемента массива; 
 // 2. index -> Индекс текущего обрабатываемого элемента в массиве; 
 // 3. array -> Массив, по которому осуществляется проход. 
 // 4. thisArg -> Необязательный параметр. Значение, используемое в качестве this при вызове функции callback
-// 📣 Возвращает новый массив 🔥🔥🔥🔥🔥🔥
+// 📣 => Возвращает новый массив 🔥🔥🔥🔥🔥🔥
 
 // Изменить тип данных с String на Number
-    let numbers2 = ["1", "-10", "15", "20", "-5", "8", "14"];
-    let numb = numbers2.map((i) => {return parseInt(i)});                   //👈 новый массив => [1, -10, 15, 20, -5, 8, 14]
+    let numbers2 =    ["1", "-10", "15", "20", "-5", "8", "14"];
+    let numb =        numbers2.map((i) => {return parseInt(i)});                                //👈 новый массив => [1, -10, 15, 20, -5, 8, 14]
+    let numbLength =  numbers2.map(function(itemVolume){return itemVolume.length});             //👈 => [1, 3, 2, 2, 2, 1, 2]
+    // Изменяет тип данных в самом себе String -> Numbers
+    numbers2.map(function(itemVolume, index, arr){return arr[index] = parseInt(itemVolume)});   //👈 => [1, -10, 15, 20, -5, 8, 14]
+    numbers2.map(function(itemVolume, index, arr){return arr[index].toString()});               //👈 => ["1", "-10", "15", "20", "-5", "8", "14"]
+    // Собираем возвращаемые значения в новый массив
+    let numb2 = numbers.map(function(itemVolume){return parseInt(itemVolume)});                 //👈 => [1, -10, 15, 20, -5, 8, 14]
+    let numb3 = numbers.map(function(itemVolume){return itemVolume});                           //👈 => ["1", "-10", "15", "20", "-5", "8", "14"]
+    // Вариант функционального программирования:
+    const itemVolumeLength =  function(itemVolume){return itemVolume.length};
+    const itemVolumeParse =   function(itemVolume){return parseInt(itemVolume)};
+    const mapFunc =           function(arr, func){return arr.map(func)};
+    let numbLength2 =         mapFunc(numbers2, itemVolumeLength);                              //👈 => [1, 3, 2, 2, 2, 1, 2]
+    let numbParseInt =        mapFunc(numbers2, itemVolumeParse);                               //👈 => [1, -10, 15, 20, -5, 8, 14]
 
-    //🔥 аналог 
+    // Aналог 
     // let numb = [];
-    // for (let i = 0; i < numbers2.length; i++) {                          //👈 новый массив с типом Number => [1, -10, 15, 20, -5, 8, 14]
+    // for (let i = 0; i < numbers2.length; i++) {                                              //👈 новый массив с типом Number => [1, -10, 15, 20, -5, 8, 14]
     //   numb[i] = parseInt(numbers2[i]);
     // }
-    //🔥
 
     // Своя реализация функции map()
-    function map(a,f) {                                                     //👈 "a" -> array, "f" -> callbackfn
+    function map(a,f) {                                                                         //👈 "a" -> array, "f" -> callbackfn
       var results = [];
       for(var i = 0, len = a.length; i < len; i++) {
         if (i in a) results[i] = f.call(null, a[i], i, a);
@@ -501,11 +512,22 @@ console.clear();
 // 📣 Передаваемая ему функция должна сожержать условие и возвращать значение true или false.
 // 📣 Возвращает новый массив 🔥🔥🔥🔥🔥🔥
 
-    let positive = numbers2.filter((i) => {return i > 0});        //👈 новый массив с типом String => ["1", "15", "20", "8", "14"]
-    let negative = numbers2.filter((i) => {return i < 0});        //👈 новый массив с типом String => ["-10", "-5"]
-    let even = numbers2.filter((i) => {return i%2 == 0});         //👈 новый массив с типом String => ["-10", "20", "8", "14"]
-    let odd = numbers2.filter((i) => {return i%2 !== 0});         //👈 новый массив с типом String => ["1", "15", "-5"]
+    let positive =  numbers2.filter((i) => {return i > 0});             //👈 новый массив с типом String => ["1", "15", "20", "8", "14"]
+    let negative =  numbers2.filter((i) => {return i < 0});             //👈 новый массив с типом String => ["-10", "-5"]
+    let even =      numbers2.filter((i) => {return i%2 == 0});          //👈 новый массив с типом String => ["-10", "20", "8", "14"]
+    let odd =       numbers2.filter((i) => {return i%2 !== 0});         //👈 новый массив с типом String => ["1", "15", "-5"]
+    
+    // Вариант функционального программирования:
+    const positiveFunc =  function(i) {return i > 0};
+    const negativeFunc =  function(i) {return i < 0};
+    const evenFunc =      function(i) {return i%2 == 0};
+    const oddFunc =       function(i) {return i%2 !== 0};
+    const filterFunc =    function(arr, func) {return arr.filter(func)};
 
+    let positiveNumb =    filterFunc(numb, positiveFunc);               //👈 -> [1, 15, 20, 8, 14]
+    let negativeNumb =    filterFunc(numb, negativeFunc);               //👈 -> [-10, -5]
+    let evenNumb =        filterFunc(numb, evenFunc);                   //👈 -> [-10, 20, 8, 14]
+    let oddNumb =         filterFunc(numb, oddFunc);                    //👈 -> [1, 15, -5]
 
 // 📣 4️⃣ Метод every();
 // 📣 Метод проверяет передаваемый массив на выполнение условия, возвращающего true или false🔥🔥🔥 "boolean". 
