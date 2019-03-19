@@ -477,11 +477,11 @@ console.clear();
 
 // Изменить тип данных с String на Number
     let numbers2 =    ["1", "-10", "15", "20", "-5", "8", "14"];
-    let numb =        numbers2.map((i) => {return parseInt(i)});                                //👈 новый массив => [1, -10, 15, 20, -5, 8, 14]
+    let numb =        numbers2.map((i) => {return parseInt(i)});                              //👈 новый массив => [1, -10, 15, 20, -5, 8, 14]
     let numbLength =  numbers2.map(function(itemValue){return itemValue.length});             //👈 => [1, 3, 2, 2, 2, 1, 2]
     // Изменяет тип данных в самом себе String -> Numbers
     numbers2.map(function(itemValue, index, arr){return arr[index] = parseInt(itemValue)});   //👈 => [1, -10, 15, 20, -5, 8, 14]
-    numbers2.map(function(itemValue, index, arr){return arr[index].toString()});               //👈 => ["1", "-10", "15", "20", "-5", "8", "14"]
+    numbers2.map(function(itemValue, index, arr){return arr[index].toString()});              //👈 => ["1", "-10", "15", "20", "-5", "8", "14"]
     // Собираем возвращаемые значения в новый массив
     let numb2 = numbers.map(function(itemValue){return parseInt(itemValue)});                 //👈 => [1, -10, 15, 20, -5, 8, 14]
     let numb3 = numbers.map(function(itemValue){return itemValue});                           //👈 => ["1", "-10", "15", "20", "-5", "8", "14"]
