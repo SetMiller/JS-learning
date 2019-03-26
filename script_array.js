@@ -296,7 +296,7 @@ console.clear();
 
 //8.Оставшиеся методы класса Array стандарта ECMAScript3
 // 📣 1️⃣ Метод join();
-// 📣 Метод Array.join() преобразует все элементы массива в строкe👆, объединяет их и возвращает получившуюся строку
+// 📣 Метод Array.join() преобразует все элементы массива в строки👆, объединяет их и возвращает получившуюся строку
 // 15.4.4.5 Array.prototype.join (separator)
 // The elements of the array are converted to Strings, and these Strings are then concatenated, separated by occurrences of the separator. 
 // If no separator is provided, a single comma🔥 is used as the separator.
