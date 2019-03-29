@@ -479,7 +479,6 @@ console.clear();
     Object.getOwnPropertyDescriptor(proto, "x");    //👈 -> {value: 1, writable: false🔥, enumerable: true, configurable: false🔥}
 // Определить вызывался ли метод можно с помощью  Object.isFrozen()
     Object.isFrozen(proto)                          //👈 -> true
-
 // ******************************************* ⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️ ************************************************ //
  
 //📣 9.Сериализация объектов
@@ -493,6 +492,32 @@ console.clear();
 // JSON.parse(obj_copy) -> восстановление объекта
     const v1JsonParse = JSON.parse(v1Json);         //👈 -> {x: 1, y: 2, r: 3}
     classof(v1JsonParse2);                          //👈 -> "Object"
+// ******************************************* ⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️ ************************************************ //
+
+//📣 10.Конвертация объекта в массив
+    const person = {
+        first: 'Rafael',
+        last: 'Solomko',
+        country: 'Russia',
+        city: 'Saint-Petersburg',
+        twitter: 'dont have',
+    };
+
+    // Способы известные мне для конвертации объекта в разные виды массивов:
+        // Вариант 1️⃣
+            const result = Object.keys(person).map(function(key) {
+                return [key, person[key]];
+            });                                                             //👈 result -> [["first", "Rafael"], ["last", "Solomko"], ...]
+            
+        
+        // Вариант 2️⃣ -> более короткий аналог способа выше🔥🔥🔥
+            const result2 = Object.entries(person)                          //👈 result -> [["first", "Rafael"], ["last", "Solomko"], ...]
+            
+        
+        // Вариант 3️⃣ -> разбивка Object.entries() на составляющие 
+            const result3 = Object.keys(person)                             //👈 result -> ["first", "last", "country", "city", "twitter"]
+            const result4 = Object.values(person)                           //👈 result -> ["Rafael", "Solomko", "Russia", "Saint-Petersburg", "dont have"]
+// ******************************************* ⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️⚙️ ************************************************ //
 
 
 //  Обращение к свойствам объекта (Ссылка или значение)
