@@ -722,5 +722,16 @@ console.clear();
 
 //📣 ___.Конвертация массивов в объект
   const cuts = ['Chuck', 'Brisket', 'Shank', 'Short Rib'];
-  let obj = {...cuts};                            //👈 -> {0: "Chuck", 1: "Brisket", 2: "Shank", 3: "Short Rib"}
 
+  let obj = {...cuts};                                              //👈 -> {0: "Chuck", 1: "Brisket", 2: "Shank", 3: "Short Rib"}
+
+  let obj2 = Object.assign({}, cuts)                                //👈 -> {0: "Chuck", 1: "Brisket", 2: "Shank", 3: "Short Rib"}
+
+  let obj3 = {};
+  for(let [index, value] of cuts.entries()) {
+     obj3[index] = value;
+  }                                                                 //👈 -> {0: "Chuck", 1: "Brisket", 2: "Shank", 3: "Short Rib"}
+                                                                    // Есть возвращаемое значение
+
+  let obj4 = {};
+  cuts.forEach((value, index) => obj4[index] = value)               //👈 -> {0: "Chuck", 1: "Brisket", 2: "Shank", 3: "Short Rib"}
