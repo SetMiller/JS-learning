@@ -17,7 +17,7 @@
       city: 'Saint Petersburg',
       key: '&APPID=a880d70bcdb81f233c4fcd3d594434de',
       units: '&units=metric',
-      // lang: '&lang=ru',
+      lang: '&lang=ru',
       // id: 'id=498817'
     }
 
